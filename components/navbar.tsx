@@ -8,6 +8,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
+  const [openMenu, setOpenMenu] = useState<string | null>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,14 +18,24 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const navLinks = [
-    { name: "Home", href: "#" },
-    { name: "Services", href: "#services" },
-    { name: "Pages", href: "#process" },
-    { name: "Blog", href: "#industries" },
-    { name: "Shop", href: "#shop" },
-    { name: "Contacts", href: "#contact" },
-    { name: "Appointment", href: "#appointment" },
+  type NavLink =
+    | { name: string; href: string }
+    | { name: string; items: { name: string; href: string }[] }
+
+  const navLinks: NavLink[] = [
+    { name: "Home", href: "/" },
+    { name: "About Us", href: "/#about" },
+    { name: "Process", href: "/#process" },
+    {
+      name: "Library",
+      items: [
+        { name: "Services", href: "/services" },
+        { name: "Industries", href: "/industries" },
+        { name: "Our Team", href: "/team" },
+      ],
+    },
+    { name: "Laboratory", href: "/#laboratory" },
+    { name: "Contact", href: "/#contact" },
   ]
 
   return (
@@ -45,15 +56,55 @@ export function Navbar() {
 
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center gap-6">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className="text-sm font-medium text-foreground hover:text-primary transition-colors uppercase tracking-wide"
-              >
-                {link.name}
-              </Link>
-            ))}
+            {navLinks.map((link) =>
+              "items" in link ? (
+                <div
+                  key={link.name}
+                  className="relative"
+                  onMouseEnter={() => setOpenMenu(link.name)}
+                  onMouseLeave={() => setOpenMenu((current) => (current === link.name ? null : current))}
+                >
+                  <button
+                    className="text-sm font-medium text-foreground hover:text-primary transition-colors uppercase tracking-wide flex items-center gap-1"
+                    onClick={() => setOpenMenu((current) => (current === link.name ? null : link.name))}
+                  >
+                    {link.name}
+                    <svg className="h-3 w-3" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </button>
+                  {openMenu === link.name && (
+                    <div
+                      className="absolute left-0 top-full z-40"
+                      onMouseEnter={() => setOpenMenu(link.name)}
+                      onMouseLeave={() => setOpenMenu(null)}
+                    >
+                      <div className="mt-3 w-48 rounded-2xl border border-border/60 bg-background shadow-xl py-3">
+                        <div className="flex flex-col">
+                          {link.items.map((item) => (
+                            <Link
+                              key={item.name}
+                              href={item.href}
+                              className="px-4 py-2 text-sm text-muted-foreground hover:text-primary hover:bg-muted/30 transition-colors"
+                            >
+                              {item.name}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className="text-sm font-medium text-foreground hover:text-primary transition-colors uppercase tracking-wide"
+                >
+                  {link.name}
+                </Link>
+              ),
+            )}
           </div>
 
           {/* Social Icons */}
@@ -86,15 +137,32 @@ export function Navbar() {
               </SheetTrigger>
               <SheetContent side="right" className="bg-background border-l-border">
                 <div className="flex flex-col gap-6 mt-10">
-                  {navLinks.map((link) => (
-                    <Link
-                      key={link.name}
-                      href={link.href}
-                      className="text-lg font-medium hover:text-primary transition-colors uppercase"
-                    >
-                      {link.name}
-                    </Link>
-                  ))}
+                  {navLinks.map((link) =>
+                    "items" in link ? (
+                      <div key={link.name} className="space-y-2">
+                        <p className="text-lg font-semibold uppercase text-foreground">{link.name}</p>
+                        <div className="pl-3 space-y-2">
+                          {link.items.map((item) => (
+                            <Link
+                              key={item.name}
+                              href={item.href}
+                              className="text-base text-muted-foreground hover:text-primary transition-colors"
+                            >
+                              {item.name}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <Link
+                        key={link.name}
+                        href={link.href}
+                        className="text-lg font-medium hover:text-primary transition-colors uppercase"
+                      >
+                        {link.name}
+                      </Link>
+                    ),
+                  )}
                 </div>
               </SheetContent>
             </Sheet>
@@ -124,8 +192,8 @@ export function Navbar() {
             </div>
           </div>
 
-          <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 py-6 text-base font-medium">
-            SCHEDULE PICKUP
+          <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 py-6 text-base font-medium">
+            <Link href="/#contact">SCHEDULE PICKUP</Link>
           </Button>
         </div>
       </div>

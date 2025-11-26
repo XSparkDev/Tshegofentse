@@ -1,19 +1,23 @@
 import { Navbar } from "@/components/navbar"
 import { Hero } from "@/components/hero"
-import { ServicesAccordion } from "@/components/services-accordion"
+import { AboutSection } from "@/components/about-section"
 import { StepwiseProcess } from "@/components/stepwise-process"
-import { IndustriesGrid } from "@/components/industries-grid"
+import { SocialProofSection } from "@/components/social-proof"
+import { LaboratorySection } from "@/components/laboratory-section"
 import { ContactSection } from "@/components/contact-section"
 import { Footer } from "@/components/footer"
+import { ScrollRevealProvider } from "@/components/scroll-reveal-provider"
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background selection:bg-primary selection:text-primary-foreground">
+    <main className="min-h-screen bg-background selection:bg-primary selection:text-primary-foreground scroll-snap-container">
+      <ScrollRevealProvider />
       <Navbar />
       <Hero />
-      <ServicesAccordion />
+      <AboutSection />
       <StepwiseProcess />
-      <IndustriesGrid />
+      <SocialProofSection />
+      <LaboratorySection />
       <ContactSection />
       <Footer />
     </main>

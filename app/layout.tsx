@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import "./globals.css"
+import { LoadingOverlay } from "@/components/loading-overlay"
 
 export const metadata: Metadata = {
   title: "Tshegofentse – Hazardous Waste & Analytical Services",
@@ -32,7 +33,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="font-sans antialiased bg-background text-foreground">{children}</body>
+      <body className="font-sans antialiased bg-background text-foreground">
+        <LoadingOverlay />
+        {children}
+      </body>
     </html>
   )
 }

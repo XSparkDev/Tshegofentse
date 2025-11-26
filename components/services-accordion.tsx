@@ -1,89 +1,145 @@
+import type React from "react"
 import { Card } from "@/components/ui/card"
-import Image from "next/image"
-import { Recycle, Droplet, Leaf, Truck, BookOpen, Trash2 } from "lucide-react"
 
-const services = [
+const speedySteps = ["Waste Sample", "Analyse Waste", "Characterise Waste", "Proposal & Waste", "Speedy Waste Collection"]
+
+const practicalSolutions = [
+  { title: "Waste assessment", description: "Free assessment and characterisation of hazardous waste streams." },
+  { title: "Compliance assist", description: "Training and support to keep generators compliant with legislation." },
+  { title: "Waste exchange", description: "Linking generators to processors so valuable materials are reused." },
+  { title: "Waste advisory", description: "Treatment insights that lower disposal fees and uncover reuse options." },
+]
+
+const specialtyServices = [
   {
-    icon: Trash2,
-    title: "General & Medical Waste",
+    title: "Fat and Grease Traps",
     description:
-      "Comprehensive collection and disposal services for general waste and specialized medical waste streams, ensuring full compliance with health regulations.",
-    image: "/medical-waste-disposal.jpg",
+      "Poor maintenance leads to blocked lines, odours, high COD, and unhygienic workplaces. We remove the fat, disinfect the area, and keep wastewater infrastructure running smoothly. Download File.",
   },
   {
-    icon: Droplet,
-    title: "Hazardous Chemical Waste",
+    title: "Wash Bay Effluent",
     description:
-      "Expert handling, transport, and disposal of hazardous chemical substances. We ensure safety protocols are strictly followed to protect the environment.",
-    image: "/chemical-laboratory-barrels.jpg",
+      "Sludge pits clogging or solids in oily water? We implement effluent treatment that diverts solids, reuses water, and helps you reach Zero Liquid Discharge. Download File.",
   },
   {
-    icon: Recycle,
-    title: "Liquid Effluent & Sludge",
+    title: "Compliance Assistance",
     description:
-      "Treatment and disposal of liquid effluent, wastewater, and industrial sludge. We focus on zero liquid discharge solutions where possible.",
-    image: "/water-treatment-plant.png",
+      "We evaluate sites for safety and environmental hazards and deliver training so teams understand hygiene, risk, and compliant disposal practices.",
   },
   {
-    icon: Leaf,
-    title: "Contaminated Soil Remediation",
+    title: "Onsite Waste Sorting",
     description:
-      "Professional assessment and remediation of contaminated soil to restore land quality and prevent groundwater pollution.",
-    image: "/soil-testing-nature.jpg",
+      "We design safer layouts, supply the right containers, and create programs that reduce mixed waste so disposal fees drop.",
   },
   {
-    icon: BookOpen,
-    title: "Waste Legal Compliance & Training",
+    title: "Training",
     description:
-      "Consultancy services to ensure your business meets all waste legislation requirements, plus training for your staff on proper waste handling.",
-    image: "/legal-documents-meeting.jpg",
+      "Tshegofentse Training Academy equips students with practical environmental skills. Visit tshegofentse-academy.co.za or email admin@tshegofentse.co.za.",
   },
-  {
-    icon: Truck,
-    title: "Waste Collection & Transport",
-    description:
-      "Regular scheduled pickups and specialized transport services for all types of waste, ensuring safe and compliant handling from source to destination.",
-    image: "/medical-waste-disposal.jpg",
-  },
+]
+
+const safetyEmphasis = [
+  { title: "Waste generator record management", description: "Every manifest, certificate, and waste profile is logged." },
+  { title: "CRM system", description: "Scheduling, communication, and record keeping handled inside one platform." },
+  { title: "Plan & schedule", description: "Turnaround times managed through proactive planning and route coordination." },
 ]
 
 export function ServicesAccordion() {
   return (
-    <section id="services" className="py-20 bg-muted/30">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">Our Services</h2>
-          <p className="text-muted-foreground text-lg">
-            We have surpassed the old model of waste management as a transportation business. Instead, we take on waste
-            management as an opportunity for smart environmental solutions.
+    <section
+      id="services"
+      data-scroll-section
+      data-truck-start="12"
+      data-truck-end="32"
+      className="relative min-h-screen flex items-center py-20 bg-[#E5F4EC] section-bg-grid scroll-snap-section"
+    >
+      <div className="container mx-auto px-4 md:px-6 space-y-14">
+        <div className="text-center max-w-4xl mx-auto space-y-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-white">Services & Practical Solutions</h2>
+          <p className="text-lg text-white/85">
+            We do more than haul waste. Tshegofentse partners with generators to analyse, treat, transport, and report on every
+            hazardous load while keeping your operation safe and compliant.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service, index) => (
+        <Card className="p-10 bg-background/95 backdrop-blur border border-border/50 shadow-xl space-y-8" data-reveal>
+          <div className="space-y-3 text-center md:text-left">
+            <p className="text-sm uppercase tracking-[0.4em] text-primary">Speedy Waste Collection</p>
+            <h3 className="text-3xl font-semibold">No delays from sample to collection</h3>
+            <p className="text-muted-foreground max-w-4xl">
+              Our turnaround time after quote acceptance is unbeatable. We keep you informed throughout the waste sample,
+              analysis, characterisation, proposal, and collection phases so nothing sits unattended.
+            </p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-5">
+            {speedySteps.map((step, index) => (
+              <div
+                key={step}
+                className="h-32 rounded-3xl border border-primary/30 bg-primary/10 flex items-center justify-center text-center text-sm font-semibold text-white"
+                data-reveal
+                style={{ "--reveal-delay": `${index * 80}ms` } as React.CSSProperties}
+              >
+                {step}
+              </div>
+            ))}
+          </div>
+        </Card>
+
+        <Card className="p-10 bg-muted/40 border border-border/60" data-reveal>
+          <h3 className="text-2xl font-bold mb-3">Waste Management CRM System</h3>
+          <p className="text-muted-foreground">
+            By using CRM software we keep client waste records up to date, schedule collections, avoid delays, and maintain an
+            auditable timeline for every project.
+          </p>
+        </Card>
+
+        <div className="grid gap-8 lg:grid-cols-2" data-reveal>
+          <Card className="p-8 bg-background/95 border border-border/50 shadow-lg">
+            <p className="text-primary font-semibold uppercase tracking-[0.3em] mb-2">Current challenge</p>
+            <h3 className="text-3xl font-semibold mb-4">Hazardous waste specialists</h3>
+            <p className="text-muted-foreground">
+              Non-compliance in hazardous waste disposal harms humans, animals, and ecosystems. We understand the character of
+              waste streams and assist businesses lacking the right information so poor decisions and illegal dumping are avoided.
+            </p>
+          </Card>
+          <Card className="p-8 bg-background/95 border border-border/50 shadow-lg">
+            <h3 className="text-2xl font-semibold mb-4">Practical solutions</h3>
+            <ul className="space-y-3 text-muted-foreground">
+              {practicalSolutions.map((item) => (
+                <li key={item.title}>
+                  <span className="font-semibold text-foreground">{item.title}: </span>
+                  {item.description}
+                </li>
+              ))}
+            </ul>
+          </Card>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2" data-reveal>
+          {specialtyServices.map((service, index) => (
             <Card
-              key={index}
-              className="group hover:shadow-xl transition-all duration-300 overflow-hidden border-border/50 hover:border-primary/50 bg-background"
+              key={service.title}
+              className="p-8 h-full flex flex-col border border-border/50 shadow-md"
+              data-reveal
+              style={{ "--reveal-delay": `${index * 70}ms` } as React.CSSProperties}
             >
-              <div className="relative h-48 w-full overflow-hidden bg-secondary/20">
-                <Image
-                  src={service.image || "/placeholder.svg"}
-                  alt={service.title}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-foreground/40 group-hover:bg-foreground/20 transition-colors" />
-                <div className="absolute top-4 left-4 bg-primary text-primary-foreground p-3 rounded-full">
-                  <service.icon className="h-6 w-6" />
-                </div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">{service.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{service.description}</p>
-              </div>
+              <h3 className="text-2xl font-semibold mb-3">{service.title}</h3>
+              <p className="text-muted-foreground flex-1">{service.description}</p>
             </Card>
           ))}
         </div>
+
+        <Card className="p-10 bg-primary/5 border border-primary/20 shadow-inner text-white" data-reveal>
+          <p className="text-sm uppercase tracking-[0.5em] text-white/80 text-center mb-6">Safety Emphasis</p>
+          <div className="grid gap-6 md:grid-cols-3">
+            {safetyEmphasis.map((item) => (
+              <div key={item.title} className="text-center space-y-2 text-white">
+                <h4 className="text-lg font-semibold">{item.title}</h4>
+                <p className="text-white/80 text-sm">{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </Card>
       </div>
     </section>
   )
